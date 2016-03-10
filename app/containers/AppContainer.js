@@ -47,6 +47,7 @@ class AppContainer extends React.Component {
 						key={state.key}
 						index={index}
 						navigationState={navigationState}
+						onNavigate={onBack}
 						position={position}
 						layout={layout}>
 						<View style={styles.container}>
