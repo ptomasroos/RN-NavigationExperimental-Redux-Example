@@ -40,7 +40,7 @@ class AppContainer extends React.Component {
 					/>
 				)}
 				renderScene={(state, index, position, layout) => (
-
+					
 					// Again, we pass our navigationState from the Redux store to <NavigationCard />.
 					// Finally, we'll render out our scene based on navigationState in _renderScene().
 					<NavigationCard
@@ -55,7 +55,7 @@ class AppContainer extends React.Component {
 						position={position}
 						layout={layout}>
 						<View style={styles.container}>
-							{this._renderScene(navigationState)}
+							{this._renderScene(state.key)}
 						</View>
 					</NavigationCard>
 				)}
@@ -63,10 +63,8 @@ class AppContainer extends React.Component {
 		)
 	}
 
-	_renderScene(navigationState) {
-		let { children, index } = navigationState
-		
-		switch(children[index].key) {
+	_renderScene(key) {
+		switch(key) {
 		case 'First':
 			return <First />
 		case 'Second':
