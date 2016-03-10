@@ -47,7 +47,11 @@ class AppContainer extends React.Component {
 						key={state.key}
 						index={index}
 						navigationState={navigationState}
-						onNavigate={onBack}
+						onNavigate={action => {
+							if (action.type === 'react-native/NavigationExperimental/stack-pop') {
+								onBack()
+							}
+						}}
 						position={position}
 						layout={layout}>
 						<View style={styles.container}>
