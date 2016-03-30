@@ -17,21 +17,14 @@ const {
 
 class AppContainer extends React.Component {
 	render() {
-		let { navigationState, onNavigate, onBack } = this.props
-
 		return (
-
 			// Note that we are not using a NavigationRootContainer here because Redux is handling
 			// the reduction of our state for us. Instead, we grab the navigationState we have in 
 			// our Redux store and pass it directly to the <NavigationAnimatedView />.
 			<NavigationAnimatedView
-				navigationState={navigationState}
+				navigationState={this.props.navigationState}
+				onNavigate={this.props.onNavigate}
 				style={styles.outerContainer}
-				onNavigate={(action) => {
-					if (action.type === 'back') {
-						onBack();
-					}
-				}}
 				renderOverlay={props => (
 					// Also note that we must explicity pass <NavigationHeader /> an onNavigate prop
 					// because we are no longer relying on an onNavigate function being available in
@@ -39,7 +32,6 @@ class AppContainer extends React.Component {
 					<NavigationHeader
 						{...props}
 						getTitle={state => state.key}
-						onNavigate={onBack}
 					/>
 				)}
 				renderScene={props => (
@@ -71,8 +63,7 @@ class AppContainer extends React.Component {
 
 AppContainer.propTypes = {
 	navigationState: PropTypes.object,
-	onNavigate: PropTypes.func.isRequired,
-	onBack: PropTypes.func.isRequired
+	onNavigate: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({
@@ -89,7 +80,8 @@ export default connect(
 		navigationState: state.navigationState
 	}),
 	dispatch => ({
-		onNavigate: (destState) => dispatch(navigatePush(destState)),
-		onBack: () => dispatch(navigatePop())
+		onNavigate: (action) => { 
+			if (action.type === 'back' || action.type === 'BackAction') { dispatch(navigatePop()) } 
+		}
 	})
 )(AppContainer)
