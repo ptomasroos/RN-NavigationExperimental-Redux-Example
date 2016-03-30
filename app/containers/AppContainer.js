@@ -28,6 +28,8 @@ class AppContainer extends React.Component {
 				navigationState={navigationState}
 				style={styles.outerContainer}
 				onNavigate={(action) => {
+					console.log('On Navigate called and action is: ', action)
+					return
 					if (action.type === 'back') {
 						onBack();
 					}

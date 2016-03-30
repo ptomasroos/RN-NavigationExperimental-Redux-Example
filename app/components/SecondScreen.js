@@ -1,4 +1,4 @@
-import React, { View, Text, PropTypes, StyleSheet } from 'react-native'
+import React, { View, Text, SliderIOS, PropTypes, StyleSheet } from 'react-native'
 
 import NavButton from './NavButton'
 
@@ -8,6 +8,14 @@ const SecondScreen = (props) => {
 			<Text style={styles.title}>Second Screen</Text>
 
 			<NavButton destLabel="Third" buttonHandler={props.onButtonPress} />
+
+			<SliderIOS
+				value={33}
+				step={1}
+				minimumValue={0}
+				maximumValue={100}
+				style={styles.slider}
+			/>
 		</View>
 	)
 }
@@ -28,6 +36,10 @@ const styles = StyleSheet.create({
 		fontWeight: '500',
 		color: '#ffffff',
 		marginBottom: 30
+	},
+	slider: {
+		width: 300,
+		marginTop: 30
 	}
 })
 
