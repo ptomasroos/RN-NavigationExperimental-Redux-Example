@@ -7,6 +7,7 @@ import First from './First'
 import Second from './Second'
 import Third from './Third'
 import { navigatePop } from '../actions'
+import iOSSidePanResponder from '../iOSSidePanResponder'
 
 const {
 	AnimatedView: NavigationAnimatedView,
@@ -38,6 +39,7 @@ class AppContainer extends React.Component {
 					<NavigationCard
 						{...props}
 						key={props.scene.navigationState.key}
+						panHandlers={iOSSidePanResponder.forHorizontal(props)}
 						renderScene={this._renderScene}
 					/>
 				)}
