@@ -10,7 +10,7 @@ const SecondScreen = (props) => {
 			<NavButton destLabel="Third" buttonHandler={props.onButtonPress} />
 
 			<SliderIOS
-				value={33}
+				value={0}
 				step={1}
 				minimumValue={0}
 				maximumValue={100}

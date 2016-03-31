@@ -79,7 +79,7 @@ export default connect(
 		navigationState: state.navigationState
 	}),
 	dispatch => ({
-		onNavigate: (action) => { if (action.type === 'back') { dispatch(navigatePop()) } },
+		onNavigate: (action) => { if (action.type === 'back' || action.type === 'BackAction') { dispatch(navigatePop()) } },
 		onBack: () => dispatch(navigatePop())
 	})
 )(AppContainer)
