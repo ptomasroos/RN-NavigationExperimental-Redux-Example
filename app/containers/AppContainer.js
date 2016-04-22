@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import First from './First'
 import Second from './Second'
 import Third from './Third'
-import { navigatePop } from '../actions'
+import { navigatePush, navigatePop } from '../actions'
 
 const {
 	AnimatedView: NavigationAnimatedView,
@@ -24,6 +24,11 @@ class AppContainer extends React.Component {
 			<NavigationAnimatedView
 				{...this.props}
 				style={styles.outerContainer}
+				onNavigate={(action) => {
+					if (action.type === 'back' || action.type === 'BackAction') {
+						this.props.onBack()
+					}
+				}}
 				renderOverlay={props => (
 					// Also note that we must explicity pass <NavigationHeader /> an onNavigate prop
 					// because we are no longer relying on an onNavigate function being available in
@@ -79,7 +84,7 @@ export default connect(
 		navigationState: state.navigationState
 	}),
 	dispatch => ({
-		onNavigate: (action) => { if (action.type === 'back') { dispatch(navigatePop()) } },
+		onNavigate: (destState) => dispatch(navigatePush(destState)),
 		onBack: () => dispatch(navigatePop())
 	})
 )(AppContainer)
