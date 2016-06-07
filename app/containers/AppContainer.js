@@ -1,7 +1,7 @@
 'use strict'
 
 import React, {PropTypes} from 'react'
-import {NavigationExperimental, View, StyleSheet} from 'react-native'
+import {NavigationExperimental, View, StyleSheet, Platform} from 'react-native'
 import { connect } from 'react-redux'
 
 import First from './First'
@@ -18,14 +18,26 @@ const {
 
 
 class AppContainer extends React.Component {
+
 	render() {
 		let { navigationState, onNavigate } = this.props
 
+		const DisabledTransitionSpec = {
+			duration: 0,
+		}
+
 		return (
 
-			// Redux is handling the reduction of our state for us. We grab the navigationState 
+			// Redux is handling the reduction of our state for us. We grab the navigationState
 			// we have in our Redux store and pass it directly to the <NavigationTransitioner />.
 			<NavigationTransitioner
+				configureTransition={() => {
+					if (Platform.OS === 'android') {
+						return DisabledTransitionSpec;
+					} else {
+						return null;
+					}
+				}}
 				navigationState={navigationState}
 				style={styles.outerContainer}
 				onNavigate={onNavigate}
@@ -45,7 +57,7 @@ class AppContainer extends React.Component {
 					<NavigationCard
 						{...props}
 						// Transition animations are determined by the StyleInterpolators. Here we manually
-						// override the default horizontal style interpolator that gets applied inside of 
+						// override the default horizontal style interpolator that gets applied inside of
 						// NavigationCard for a vertical direction animation if we are showing a modal.
 						style={props.scene.route.key === 'Modal' ?
 									NavigationCard.CardStackStyleInterpolator.forVertical(props) :
@@ -64,7 +76,7 @@ class AppContainer extends React.Component {
 
 	_renderScene({scene}) {
 		const { route } = scene
-		
+
 		switch(route.key) {
 		case 'First':
 			return <First />
